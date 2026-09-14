@@ -1,0 +1,121 @@
+/* =========================================================================
+   Maryam Roshan — Design tokens
+   The single source of truth for colour, type, spacing and elevation.
+   Bootstrap is remapped onto these tokens in app.css; utilities stay Tailwind.
+
+   Palette: deep navy + sky blue, with dusty-rose / sage accents — matches the
+   salon's approved portal design (see design/maryamroshan.html reference).
+   ========================================================================= */
+
+:root {
+  /* Brand — navy & sky-blue, the approved portal identity */
+  --mr-rose-50:  #eef1fb;
+  --mr-rose-100: #dde3f6;
+  --mr-rose-200: #b8c3ea;
+  --mr-rose-300: #8d9dd8;
+  --mr-rose-400: #5f6cb0;
+  --mr-rose-500: #454e92;
+  --mr-rose-600: #384381;
+  --mr-rose-700: #2c3567;
+  --mr-rose-800: #21274d;
+  --mr-rose-900: #171b37;
+
+  --mr-gold-100: #e6f2fa;
+  --mr-gold-300: #a9d0e9;
+  --mr-gold-500: #4690bf;
+  --mr-gold-700: #316b93;
+
+  --mr-plum-50:  #f6f7fb;
+  --mr-plum-100: #eaedf6;
+  --mr-plum-200: #d4d9ec;
+  --mr-plum-400: #9097b3;
+  --mr-plum-600: #565f85;
+  --mr-plum-800: #2a3057;
+  --mr-plum-900: #1a1e38;
+
+  /* Decorative accents used sparingly (badges, shapes, dots) */
+  --mr-dusty-rose: #E8D0CF;
+  --mr-sage:       #C3D2C3;
+
+  /* Neutrals */
+  --mr-white:   #ffffff;
+  --mr-ink:     #1f2340;
+  --mr-muted:   #6b7190;
+  --mr-line:    #e7e9f3;
+  --mr-surface: #ffffff;
+  --mr-canvas:  #f7f8fc;
+
+  /* Semantic */
+  --mr-primary:        var(--mr-rose-600);
+  --mr-primary-hover:  var(--mr-rose-700);
+  --mr-primary-soft:   var(--mr-rose-100);
+  --mr-accent:         var(--mr-gold-500);
+  --mr-success:        #2e9e6b;
+  --mr-success-soft:   #e3f5ed;
+  --mr-warning:        #e0a43a;
+  --mr-warning-soft:   #fdf3e0;
+  --mr-danger:         #d9534f;
+  --mr-danger-soft:    #fbeae8;
+  --mr-info:           #4690bf;
+  --mr-info-soft:      #e8f1fa;
+
+  /* Typography */
+  --mr-font: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
+  --mr-fs-xs: 0.75rem;
+  --mr-fs-sm: 0.8125rem;
+  --mr-fs-md: 0.9375rem;
+  --mr-fs-lg: 1.0625rem;
+  --mr-fs-xl: 1.375rem;
+  --mr-fs-2xl: 1.875rem;
+  --mr-fs-3xl: 2.5rem;
+  --mr-lh: 1.8;
+
+  /* Spacing scale (4px base) */
+  --mr-s1: 0.25rem;
+  --mr-s2: 0.5rem;
+  --mr-s3: 0.75rem;
+  --mr-s4: 1rem;
+  --mr-s5: 1.5rem;
+  --mr-s6: 2rem;
+  --mr-s7: 3rem;
+  --mr-s8: 4rem;
+
+  /* Radius + elevation */
+  --mr-radius-sm: 8px;
+  --mr-radius:    14px;
+  --mr-radius-lg: 18px;
+  --mr-radius-pill: 999px;
+  --mr-shadow-xs: 0 1px 2px rgba(31, 35, 64, .06);
+  --mr-shadow-sm: 0 2px 10px rgba(31, 35, 64, .06);
+  --mr-shadow:    0 10px 30px rgba(31, 35, 64, .08);
+  --mr-shadow-lg: 0 24px 60px rgba(31, 35, 64, .14);
+
+  /* Motion */
+  --mr-ease: cubic-bezier(.22, .61, .36, 1);
+  --mr-dur: 220ms;
+
+  /* Layout */
+  --mr-sidebar-w: 270px;
+  --mr-topbar-h: 68px;
+  --mr-container: 1240px;
+  --mr-z-header: 900;
+  --mr-z-drawer: 1000;
+  --mr-z-modal: 1100;
+  --mr-z-toast: 1200;
+}
+
+[data-theme="dark"] {
+  --mr-surface: #171b2e;
+  --mr-canvas:  #0f1220;
+  --mr-ink:     #e8eaf3;
+  --mr-muted:   #9097b3;
+  --mr-line:    #262c47;
+  --mr-primary-soft: #232a4e;
+  --mr-shadow-sm: 0 2px 10px rgba(0, 0, 0, .35);
+  --mr-shadow:    0 10px 30px rgba(0, 0, 0, .45);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --mr-dur: 1ms; }
+  * { animation-duration: 1ms !important; transition-duration: 1ms !important; }
+}

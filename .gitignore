@@ -1,0 +1,36 @@
+# محیط و اسرار
+.env
+.env.*
+!.env.example
+
+# ذخیره‌سازی
+storage/logs/*
+!storage/logs/.gitkeep
+storage/cache/*
+!storage/cache/.gitkeep
+storage/exports/*
+!storage/exports/.gitkeep
+storage/invoices/*
+!storage/invoices/.gitkeep
+storage/backups/*
+!storage/backups/.gitkeep
+storage/installed.lock
+storage/*.sqlite
+storage/*.db
+
+# آپلودها
+public/uploads/*
+!public/uploads/.gitkeep
+
+# وابستگی‌ها و ابزارها
+/vendor/
+node_modules/
+composer.lock
+
+# سیستم‌عامل و ویرایشگر
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*~

@@ -48,6 +48,8 @@ $router->group([
     $r->post('/live-status/heartbeat', 'Api\LiveStatusController@heartbeat')->middleware('Csrf');
     $r->post('/live-status/start-service', 'Api\LiveStatusController@startService')->middleware('Csrf');
     $r->post('/live-status/end-service', 'Api\LiveStatusController@endService')->middleware('Csrf');
+    $r->post('/live-status/alerts/{id}/acknowledge', 'Api\LiveStatusController@acknowledge')->middleware('Csrf');
+    $r->post('/live-status/alerts/{id}/resolve', 'Api\LiveStatusController@resolve')->middleware('Csrf');
     $r->post('/live-status/clock-in', 'Api\LiveStatusController@clockIn')->middleware('Csrf');
     $r->post('/live-status/clock-out', 'Api\LiveStatusController@clockOut')->middleware('Csrf');
     $r->post('/live-status/break-start', 'Api\LiveStatusController@startBreak')->middleware('Csrf');

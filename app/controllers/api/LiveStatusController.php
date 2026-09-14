@@ -70,6 +70,26 @@ final class LiveStatusController extends BaseController
         return $this->json(['ok' => true, 'status' => 'AVAILABLE']);
     }
 
+    public function acknowledge(Request $request, string $id): Response
+    {
+        $user = AuthService::currentUser();
+        $alertId = (int)$id;
+        $db = \App\Core\Database::instance();
+        $db->execute("UPDATE operational_alerts SET status='ACKNOWLEDGED' WHERE id=:id AND status='OPEN'", ['id' => $alertId]);
+        $db->insert('operational_alert_actions', ['alert_id' => $alertId, 'user_id' => (int)$user['id'], 'action' => 'ACKNOWLEDGED', 'note' => $request->str('note') ?: null]);
+        return $this->json(['ok' => true, 'status' => 'ACKNOWLEDGED']);
+    }
+
+    public function resolve(Request $request, string $id): Response
+    {
+        $user = AuthService::currentUser();
+        $alertId = (int)$id;
+        $db = \App\Core\Database::instance();
+        $db->execute("UPDATE operational_alerts SET status='RESOLVED', resolved_at=NOW() WHERE id=:id AND status <> 'RESOLVED'", ['id' => $alertId]);
+        $db->insert('operational_alert_actions', ['alert_id' => $alertId, 'user_id' => (int)$user['id'], 'action' => 'RESOLVED', 'note' => $request->str('note') ?: null]);
+        return $this->json(['ok' => true, 'status' => 'RESOLVED']);
+    }
+
     public function index(Request $request): Response
     {
         $branch = $this->scopedBranchId();

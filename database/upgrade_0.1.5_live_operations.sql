@@ -100,3 +100,15 @@ CREATE TABLE IF NOT EXISTS operational_alerts (
   UNIQUE KEY uq_operational_alert (alert_key), KEY idx_alert_status (status, last_seen_at),
   CONSTRAINT fk_alert_staff FOREIGN KEY (staff_id) REFERENCES staff(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS operational_alert_actions (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  alert_id BIGINT UNSIGNED NOT NULL,
+  user_id INT UNSIGNED NOT NULL,
+  action ENUM('ACKNOWLEDGED','RESOLVED') NOT NULL,
+  note VARCHAR(255) NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id), KEY idx_alert_actions_alert (alert_id, created_at),
+  CONSTRAINT fk_alert_action_alert FOREIGN KEY (alert_id) REFERENCES operational_alerts(id) ON DELETE CASCADE,
+  CONSTRAINT fk_alert_action_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

@@ -76,11 +76,12 @@ final class LiveStatusController extends BaseController
         if ($branch === null && $request->int('branch_id')) $branch = $request->int('branch_id');
         $since = $request->query('since');
         $service = new LiveStatusService();
+        $alerts = (new \App\Services\OperationalAlertService())->sync($branch);
         return $this->json([
             'summary' => $service->summary($branch),
             'staff' => $service->statuses($branch, is_string($since) && $since !== '' ? $since : null),
             'activities' => $service->activities($branch, 12),
-            'alerts' => $service->alerts($branch),
+            'alerts' => $alerts,
             'server_time' => date(DATE_ATOM),
         ]);
     }

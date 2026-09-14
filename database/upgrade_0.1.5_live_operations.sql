@@ -84,3 +84,19 @@ CREATE TABLE IF NOT EXISTS staff_breaks (
   PRIMARY KEY (id), KEY idx_break_staff_live (staff_id, ended_at),
   CONSTRAINT fk_break_staff FOREIGN KEY (staff_id) REFERENCES staff(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS operational_alerts (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  alert_key VARCHAR(180) NOT NULL,
+  type VARCHAR(40) NOT NULL,
+  severity ENUM('INFO','WARNING','DANGER') NOT NULL DEFAULT 'WARNING',
+  title VARCHAR(180) NOT NULL,
+  body VARCHAR(500) NOT NULL,
+  staff_id INT UNSIGNED NULL,
+  status ENUM('OPEN','ACKNOWLEDGED','RESOLVED') NOT NULL DEFAULT 'OPEN',
+  first_seen_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  last_seen_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  resolved_at DATETIME NULL,
+  UNIQUE KEY uq_operational_alert (alert_key), KEY idx_alert_status (status, last_seen_at),
+  CONSTRAINT fk_alert_staff FOREIGN KEY (staff_id) REFERENCES staff(id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

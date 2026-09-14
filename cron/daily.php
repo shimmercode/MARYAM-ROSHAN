@@ -16,6 +16,7 @@ use App\Core\Database;
 use App\Services\AnalyticsService;
 use App\Services\AutomationService;
 use App\Services\BackupService;
+use App\Services\ContractAlertService;
 use App\Services\NotificationService;
 use App\Services\SettingsService;
 
@@ -23,6 +24,10 @@ $db        = Database::instance();
 $analytics = new AnalyticsService();
 $yesterday = date('Y-m-d', strtotime('-1 day'));
 $tasks     = [];
+
+$tasks[] = cron_task('هشدار انقضای قراردادها', static function (): string {
+    return sprintf('%d قرارداد نزدیک به انقضا شناسایی شد.', (new ContractAlertService())->process(10));
+});
 
 /* ---------------------------------------------------------- analytics -- */
 

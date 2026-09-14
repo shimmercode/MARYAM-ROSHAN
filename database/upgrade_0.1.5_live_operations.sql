@@ -112,3 +112,19 @@ CREATE TABLE IF NOT EXISTS operational_alert_actions (
   CONSTRAINT fk_alert_action_alert FOREIGN KEY (alert_id) REFERENCES operational_alerts(id) ON DELETE CASCADE,
   CONSTRAINT fk_alert_action_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS staff_contracts (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  staff_id INT UNSIGNED NOT NULL,
+  contract_number VARCHAR(80) NULL,
+  contract_type VARCHAR(60) NULL,
+  starts_on DATE NOT NULL,
+  ends_on DATE NULL,
+  status ENUM('ACTIVE','EXPIRED','TERMINATED') NOT NULL DEFAULT 'ACTIVE',
+  document_id BIGINT UNSIGNED NULL,
+  notes TEXT NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id), KEY idx_contract_expiry (ends_on,status),
+  CONSTRAINT fk_contract_staff FOREIGN KEY (staff_id) REFERENCES staff(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

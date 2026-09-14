@@ -1,0 +1,193 @@
+/* ==========================================================================
+   portal.css — mobile-first skin for /staff and /customer.
+   Depends on tokens.css (--mr-*) and app.css (mr-card, mr-btn, …).
+   ========================================================================== */
+
+.portal-body {
+    background: var(--mr-bg);
+    padding-bottom: calc(72px + env(safe-area-inset-bottom));
+}
+
+/* ------------------------------------------------------------- header --- */
+.portal-header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: var(--mr-surface);
+    border-bottom: 1px solid var(--mr-border);
+    backdrop-filter: saturate(180%) blur(10px);
+}
+.portal-header__inner {
+    max-width: 860px;
+    margin-inline: auto;
+    padding: var(--mr-s3) var(--mr-s4);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--mr-s3);
+}
+.portal-brand { display: flex; align-items: center; gap: var(--mr-s3); text-decoration: none; color: inherit; }
+.portal-brand__mark {
+    width: 40px; height: 40px; flex: none;
+    display: grid; place-items: center;
+    border-radius: var(--mr-radius-md);
+    background: linear-gradient(135deg, var(--mr-gold), var(--mr-gold-soft));
+    color: var(--mr-ink-invert);
+    font-weight: 700; font-size: .8rem;
+}
+.portal-brand__name { display: block; font-weight: 600; font-size: .95rem; }
+.portal-brand__sub  { display: block; font-size: .72rem; color: var(--mr-muted); }
+
+/* --------------------------------------------------------------- main --- */
+.portal-main {
+    max-width: 860px;
+    margin-inline: auto;
+    padding: var(--mr-s4);
+}
+.portal-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0 0 var(--mr-s4);
+    letter-spacing: -.01em;
+}
+
+/* ------------------------------------------------------------- tabbar --- */
+.portal-tabbar {
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 50;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    background: var(--mr-surface);
+    border-top: 1px solid var(--mr-border);
+    padding-bottom: env(safe-area-inset-bottom);
+    box-shadow: 0 -6px 24px rgb(0 0 0 / .06);
+}
+.portal-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: var(--mr-s3) 2px;
+    text-decoration: none;
+    color: var(--mr-muted);
+    font-size: .7rem;
+    transition: color .18s ease;
+}
+.portal-tab__icon { font-size: 1.15rem; line-height: 1; }
+.portal-tab.is-active { color: var(--mr-gold-ink, var(--mr-gold)); font-weight: 600; }
+.portal-tab.is-active .portal-tab__icon { transform: translateY(-1px); }
+
+/* ------------------------------------------------- portal-only pieces --- */
+
+/* Big "next appointment" hero card on both dashboards. */
+.next-card {
+    border-radius: var(--mr-radius-lg);
+    padding: var(--mr-s5);
+    color: var(--mr-ink-invert);
+    background: linear-gradient(140deg, #23232E 0%, #16161C 60%, #2A2230 100%);
+    position: relative;
+    overflow: hidden;
+}
+.next-card::after {
+    content: '';
+    position: absolute;
+    inset-block-start: -40%;
+    inset-inline-end: -10%;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgb(201 162 39 / .28), transparent 68%);
+}
+.next-card__label { font-size: .75rem; opacity: .75; }
+.next-card__time  { font-size: 2rem; font-weight: 700; line-height: 1.2; }
+.next-card__meta  { font-size: .85rem; opacity: .85; }
+
+/* Tier ring on the loyalty page. */
+.tier-ring {
+    width: 132px; height: 132px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    margin-inline: auto;
+    background: conic-gradient(var(--tier-color, var(--mr-gold)) var(--tier-pct, 0%), var(--mr-border) 0);
+}
+.tier-ring__inner {
+    width: 106px; height: 106px;
+    border-radius: 50%;
+    background: var(--mr-surface);
+    display: grid; place-items: center;
+    text-align: center;
+}
+.tier-ring__value { font-size: 1.4rem; font-weight: 700; }
+.tier-ring__label { font-size: .7rem; color: var(--mr-muted); }
+
+/* Compact schedule / appointment rows. */
+.slot-row {
+    display: flex;
+    align-items: center;
+    gap: var(--mr-s3);
+    padding: var(--mr-s3) 0;
+    border-bottom: 1px solid var(--mr-border);
+}
+.slot-row:last-child { border-bottom: 0; }
+.slot-row__time {
+    flex: none;
+    min-width: 58px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+.slot-row__body { flex: 1; min-width: 0; }
+.slot-row__body strong { display: block; font-size: .92rem; }
+.slot-row__body small  { color: var(--mr-muted); }
+
+/* Star rating input used by the review form. */
+.rating-input { display: flex; flex-direction: row-reverse; justify-content: flex-end; gap: 4px; }
+.rating-input input { position: absolute; opacity: 0; width: 0; height: 0; }
+.rating-input label {
+    font-size: 1.7rem;
+    color: var(--mr-border);
+    cursor: pointer;
+    line-height: 1;
+    transition: color .12s ease, transform .12s ease;
+}
+.rating-input label:hover,
+.rating-input label:hover ~ label,
+.rating-input input:checked ~ label { color: var(--mr-gold); }
+.rating-input label:active { transform: scale(1.15); }
+
+/* Day column used by the staff weekly schedule. */
+.week-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--mr-s3);
+}
+.week-day {
+    background: var(--mr-surface);
+    border: 1px solid var(--mr-border);
+    border-radius: var(--mr-radius-md);
+    padding: var(--mr-s3);
+    min-height: 120px;
+}
+.week-day.is-today { border-color: var(--mr-gold); box-shadow: 0 0 0 2px rgb(201 162 39 / .14); }
+.week-day__head { font-size: .78rem; font-weight: 600; margin-bottom: var(--mr-s2); color: var(--mr-muted); }
+.week-day__item {
+    font-size: .75rem;
+    background: var(--mr-bg);
+    border-radius: var(--mr-radius-sm);
+    padding: 4px 6px;
+    margin-bottom: 4px;
+}
+
+@media (min-width: 768px) {
+    .portal-title { font-size: 1.5rem; }
+    .portal-body  { padding-bottom: var(--mr-s6); }
+    .portal-tabbar {
+        position: static;
+        max-width: 860px;
+        margin: var(--mr-s5) auto 0;
+        border: 1px solid var(--mr-border);
+        border-radius: var(--mr-radius-lg);
+        box-shadow: none;
+    }
+}

@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Wrapper: run PHP CLI scripts via the php-wasm runtime available in this sandbox.
+exec node /home/user/MARYAM-ROSHAN/tools/php-runner.mjs "$@"

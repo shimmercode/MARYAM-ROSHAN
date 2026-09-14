@@ -1,0 +1,12 @@
+# Shared hosting helper: forward all traffic into the public/ webroot when the
+# document root cannot be pointed at public/ directly.
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^(?!public/)(.*)$ public/$1 [L]
+</IfModule>
+
+<FilesMatch "^(\.env.*|composer\.(json|lock))$">
+    Require all denied
+</FilesMatch>
+
+Options -Indexes

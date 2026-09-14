@@ -51,6 +51,8 @@ View::section('content');
         <div><span class="text-xs text-muted">غایب</span><strong class="block text-xl text-danger" id="liveAbsent">—</strong></div>
     </div>
 </section>
+<section class="mr-card mb-5" id="livePersonnelTable"><div class="mr-card__head"><h2 class="mr-card__title">پرسنل و جایگاه‌های زنده</h2><span class="text-xs text-muted">بروزرسانی خودکار</span></div><div class="mr-table__wrap"><table class="mr-table"><thead><tr><th>پرسنل</th><th>شعبه</th><th>وضعیت</th><th>خدمت</th><th>مشتری</th><th>جایگاه</th><th>آخرین فعالیت</th></tr></thead><tbody id="livePersonnelRows"><tr><td colspan="7" class="text-muted">در حال دریافت...</td></tr></tbody></table></div></section>
+
 <section class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
     <div class="mr-card"><div class="mr-card__head"><h2 class="mr-card__title">هشدارهای عملیاتی</h2></div><div class="mr-card__body" id="liveAlerts"><span class="text-muted text-sm">در حال دریافت...</span></div></div>
     <div class="mr-card"><div class="mr-card__head"><h2 class="mr-card__title">فعالیت‌های اخیر</h2></div><div class="mr-card__body" id="liveActivities"><span class="text-muted text-sm">در حال دریافت...</span></div></div>
@@ -302,6 +304,7 @@ async function loadLive() {
         document.getElementById('liveAbsent').textContent = toFa(s.ABSENT || 0);
         document.getElementById('liveAlerts').innerHTML = (live.alerts || []).slice(0, 6).map(a => `<div class=\"border-b py-2 text-sm\"><strong class=\"text-warning\">⚠ ${a.staff_name}</strong><div class=\"text-muted\">${a.message}</div></div>`).join('') || '<span class=\"text-success text-sm\">هشداری وجود ندارد.</span>';
         document.getElementById('liveActivities').innerHTML = (live.activities || []).slice(0, 6).map(a => `<div class=\"border-b py-2 text-sm\"><strong>${a.staff_name || 'سیستم'}</strong><div class=\"text-muted\">${a.event_type} · ${a.created_at}</div></div>`).join('') || '<span class=\"text-muted text-sm\">فعالیتی ثبت نشده است.</span>';
+        document.getElementById('livePersonnelRows').innerHTML = (live.staff || []).map(p => `<tr><td><strong>${p.first_name} ${p.last_name}</strong></td><td>${p.branch_name || '—'}</td><td><span class=\"mr-badge\">${p.status_label}</span></td><td>${p.service_name || '—'}</td><td>${p.customer_name || '—'}</td><td>${p.seat_code || '—'}</td><td>${p.last_activity_at || '—'}</td></tr>`).join('') || '<tr><td colspan=\"7\">پرسنلی برای نمایش وجود ندارد.</td></tr>';
         document.getElementById('liveUpdated').textContent = 'آخرین بروزرسانی: ' + new Date().toLocaleTimeString('fa-IR');
     } catch (e) {
         document.getElementById('liveUpdated').textContent = 'دریافت وضعیت زنده ناموفق بود';

@@ -73,6 +73,7 @@ final class LiveStatusController extends BaseController
     public function index(Request $request): Response
     {
         $branch = $this->scopedBranchId();
+        if ($branch === null && $request->int('branch_id')) $branch = $request->int('branch_id');
         $since = $request->query('since');
         $service = new LiveStatusService();
         return $this->json([
